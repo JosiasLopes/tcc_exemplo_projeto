@@ -1,0 +1,114 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.fundo{
+	-fx-background-color : rgb(200,0,0);
+}
+.fundo_verde{
+	-fx-background-color : rgb(139,213,186);
+}
+.fundo_azul{
+	-fx-background-color : rgb(89,163,196);
+}
+.fundo_transparente{
+	-fx-background-color : rgba(217,72,98,0);
+}
+.fundo_roxo_claro{
+	-fx-background-color : rgba(217,72,98,1);
+}
+.texto_vermelho{
+	-fx-font-size: 25px;
+	-fx-text-fill: red;
+}
+.texto_cinza{
+	-fx-text-fill: rgb(129,129,129);
+}
+.texto_branco{
+	
+	-fx-text-fill: white;
+}
+.fonte_14{
+	-fx-font-size: 14px;
+}
+.fonte_19{
+	-fx-font-size: 19px;
+}
+.fonte_22{
+	-fx-font-size: 22px;
+}
+.fonte_25{
+	
+	-fx-font-size: 25px;
+}
+.fonte_32{
+	-fx-font-size: 28px;
+}
+.fonte_48{
+	-fx-font-size: 40px;
+}
+
+.bordas_redondas_acentuadas{
+	-fx-background-radius: 20;-fx-border-radius: 20;-fx-border-color: rgba(0,0,0,0);
+}
+.bordas_redondas_mediana{
+	-fx-background-radius: 10;-fx-border-radius: 10;-fx-border-color: rgba(0,0,0,0);
+}
+.bordas_redondas_leves{
+	-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: rgba(0,0,0,0);
+}
+.bordas_redondas_leves_brancas{
+	-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: white;
+}
+.bordas_redondas_acentuadas_brancas{
+	-fx-background-radius: 7;-fx-border-radius: 7;-fx-border-color: rgba(0,0,0,0);
+}
+.bordas_redondas_leves_top{
+	-fx-background-radius: 4,1,8,8;-fx-border-radius: 4,1,8,8;-fx-border-color: rgba(0,0,0,0);
+}
+.padding_texto_padrao{
+	-fx-label-padding: 8px,0,8px,8px;
+}
+.fundo_degrade_linear_gelo{
+	-fx-background-color: linear-gradient(from 10% 5% to 20% 100%, rgba(202,208,238,1), rgba(230,210,230,0.7) 200%);
+}
+.fundo_degrade_linear_verde_translucido{
+	-fx-background-color: linear-gradient(from 10% 5% to 20% 100%, rgba(139,213,186,1), rgba(139,213,186,0.6) 200%);
+}
+.fundo_degrade_linear_roxo_claro_translucido{
+	-fx-background-color: linear-gradient(from 10% 5% to 20% 100%, rgba(217,72,98,0.8), rgba(217,72,98,0.4) 200%);
+}
+.borda_direita{
+	-fx-background-color: white, linear-gradient(from 10% 5% to 20% 100%, rgba(217,72,98,0.8), rgba(217,72,98,0.4) 200%);
+	-fx-background-insets :0,0 2 0 0 ;
+}
+.degrade_branco{
+	-fx-background-color: linear-gradient(from 10% 5% to 70% 100%, rgba(255,255,255,0.7), rgba(255,255,255,0.6) 200%);
+}
+.btn_menu_principal{
+	-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: white;
+	-fx-font-size: 28px;
+	-fx-text-fill: white;
+	-fx-background-color : rgb(139,213,186);
+}
+.btn_submenu_principal{
+	-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: rgba(255,255,255,0);
+	-fx-font-size: 25px;
+	-fx-text-fill: white;
+	-fx-background-color : rgb(139,213,186);
+}
+.linux_style_text{
+	-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: rgba(255,255,255,0);
+	-fx-font-size: 19px;
+	-fx-text-fill: rgb(129,129,129);
+	-fx-background-color: linear-gradient(from 10% 5% to 70% 100%, rgba(255,255,255,0.7), rgba(255,255,255,0.6) 200%);
+}
+.botao_padrao{
+	-fx-background-color : rgb(139,213,186);
+	-fx-text-fill: white;
+	-fx-font-size: 19px;
+}
+
+.botao_bordas_brancas{
+-fx-font-size: 28px;
+-fx-background-color : rgb(139,213,186);
+-fx-text-fill: white;
+-fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: white;
+}

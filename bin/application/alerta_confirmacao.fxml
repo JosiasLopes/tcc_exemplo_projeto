@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane  id="fundo_azul" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 10% 5% to 20% 100%, rgba(120,72,160,0.6), rgba(217,72,98,0.2) 200%);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button id="cancel" layoutX="369.0" layoutY="229.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="100.0" styleClass="botao_padrao" stylesheets="@../../../noite/wks/tcc_exemplo_projeto/src/application/application.css" text="Cancelar" />
+      <Button id="ok" layoutX="479.0" layoutY="229.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="111.0" styleClass="botao_padrao" stylesheets="@../../../noite/wks/tcc_exemplo_projeto/src/application/application.css" text="Confirmar" />
+      <Label id="cabecalho" layoutX="16.0" layoutY="26.0" prefHeight="40.0" prefWidth="565.0" stylesheets="@../../../noite/wks/tcc_exemplo_projeto/src/application/application.css" text="Label">
+         <styleClass>
+            <String fx:value="fonte_32" />
+            <String fx:value="fundo_transparente" />
+            <String fx:value="texto_branco" />
+         </styleClass>
+      </Label>
+      <Label id="conteudo" layoutX="39.0" layoutY="93.0" stylesheets="@../../../noite/wks/tcc_exemplo_projeto/src/application/application.css" text="Label">
+         <styleClass>
+            <String fx:value="fonte_19" />
+            <String fx:value="texto_branco" />
+         </styleClass>
+      </Label>
+   </children>
+</AnchorPane>
