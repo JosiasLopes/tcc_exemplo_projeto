@@ -161,6 +161,7 @@ public class Main extends Application {
 			botao_bordas_brancas.add("texto_branco");
 			botao_bordas_brancas.add("fundo_verde");
 			botao_bordas_brancas.add("bordas_redondas_leves_brancas");
+			
 		
 pmenu_principal_lateral_esquerdo = new AnchorPane();
 
@@ -359,6 +360,8 @@ tbeditsetor = new TableView<>();
 			
 				cancelarsetor = new fxLabel("Cancelar","Cancelar","crsetor");
 				cadastrarsetor = new fxLabel("Cadastrar","Cadastrar","cadsetor");
+				cadastrarsetor.setDefaulStyle(bt_cadcancel);
+				cancelarsetor.setDefaulStyle(bt_cadcancel);
 				
 		//fim do bloco que cria os textbox
 				
@@ -521,6 +524,8 @@ tbeditsetor = new TableView<>();
 				cadastrarfuncionario.setLayoutXY(fundorouxofuncionario.getMinWidth()+895,fundorouxofuncionario.getMinHeight()+625);
 				cadastrarfuncionario.setPrefSize(120, 50);
 				cadastrarfuncionario.setPadding(new Insets(15, 0, 15, 15));
+				cancelarfuncionario.setDefaulStyle(bt_cadcancel);
+				cadastrarfuncionario.setDefaulStyle(bt_cadcancel);
 				
 				
 				//posiciona elementos na tela de cadastro de riscos
@@ -1337,25 +1342,12 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		AddCSS(tctps,"linux_style_text");
 		AddCSS(tcep,"linux_style_text");
 		
-		AddCSS(cadastrarfuncionario,"fonte_19");
-		AddCSS(cadastrarfuncionario,"texto_branco");
-		AddCSS(cadastrarfuncionario,"fundo_verde");
-		AddCSS(cadastrarfuncionario,"bordas_redondas_leves");
-		
-		AddCSS(cancelarfuncionario,"fonte_19");
-		AddCSS(cancelarfuncionario,"texto_branco");
-		AddCSS(cancelarfuncionario,"fundo_verde");
-		AddCSS(cancelarfuncionario,"bordas_redondas_leves");
-		
 		
 		//formatando tela de cadastro de setor
 		
 		AddCSS(textoatribuicaosetor,"linux_style_text");
 		AddCSS(txtdescricaosetor,"linux_style_text");
-		AddCSS(cancelarsetor,"fonte_19");
-		AddCSS(cancelarsetor,"texto_branco");
-		AddCSS(cancelarsetor,"fundo_verde");
-		AddCSS(cancelarsetor,"bordas_redondas_leves");
+
 		
 		AddCSS(setoratribuicao,"texto_branco");
 		AddCSS(setoratribuicao,"fonte_25");
@@ -1363,12 +1355,7 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		AddCSS(setordescricao,"texto_branco");
 		AddCSS(setordescricao,"fonte_25");
 		
-		AddCSS(cadastrarsetor,"fonte_19");
-		AddCSS(cadastrarsetor,"texto_branco");
-		AddCSS(cadastrarsetor,"fundo_verde");
-		AddCSS(cadastrarsetor,"bordas_redondas_leves");
-		
-		
+	
 		//componentes tela de edicao de setor
 		
 		AddCSS(edtsetoratribuicao,"texto_branco");
@@ -2179,12 +2166,7 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 							JOptionPane.showMessageDialog(null, e.getMessage());
 						}
 					
-					
-					
-					
-					
-					
-					
+	
 				}else if(node.getObjName().equals("Cadastrar nova via de transmissao")){
 					
 					TextInputDialog tinput = new TextInputDialog();
