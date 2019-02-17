@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 
-public class fxComboBox extends ComboBox {
+public class fxComboBox extends ComboBox implements DefaultStyleCss{
 	
 	
 	public fxComboBox(ObservableList l){

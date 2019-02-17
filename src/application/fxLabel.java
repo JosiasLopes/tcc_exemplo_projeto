@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
-public class fxLabel extends Label {
+public class fxLabel extends Label implements DefaultStyleCss{
 	
 	private String objName, state;
 
@@ -47,16 +47,6 @@ public class fxLabel extends Label {
 		AddCSS(this,"fundo_verde");
 		AddCSS(this,"bordas_redondas_leves_brancas");
 	}
-	public void setDefaulStyle(ArrayList<String> lista){
-		for(int i=0;i<lista.size();i++){
-		AddCSS(this,lista.get(i));
-	}
-	}
-	
-	public void setDefaulStyle(String css){
-		AddCSS(this,css);
-	}
-
 
 	public fxLabel(String txt) {
 		super(txt);

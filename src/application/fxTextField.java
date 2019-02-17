@@ -5,7 +5,7 @@ package application;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 
-public class fxTextField extends TextField {
+public class fxTextField extends TextField implements DefaultStyleCss{
 	
 	private String objName, state;
 	

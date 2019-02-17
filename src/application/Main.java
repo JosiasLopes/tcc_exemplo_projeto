@@ -7,6 +7,7 @@ import java.util.List;
 import javax.security.auth.callback.Callback;
 import javax.swing.JOptionPane;
 
+
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import webservices.ClienteViaCepWS;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -59,12 +61,12 @@ public class Main extends Application {
 	
 	
 	//painel cadastro da empresa
-	static AnchorPane fundocinzaempresas,fundocinzafuncionario,fundocinzacargod,ptelacadastrodecargos,fundocinzarisco,fundocinzasetor,fundocinzaeditarsetor,fundocinzadelempresa;
+	static AnchorPane fundocinzaempresas,fundocinzafuncionario,fundocinzacargod,ptelacadastrodecargos,fundocinzarisco,fundocinzasetor,fundocinzaeditarsetor,fundocinzadelempresa,fundocinzacadastracargo;
 	static AnchorPane subpainelcena2,subpainelcena3,subpainelcena4,subpainelcena5,subpainelcena6,subpainelcena7,subpainelcena8,fundorouxoempresa,fundorouxofuncionario,fundorouxosetores,fundorouxorisco,fundorouxosetor
-	,fundorouxodelempresa,fundorouxocadastrafuncionario,fundocinzacadastrafuncionario;
+	,fundorouxodelempresa,fundorouxocadastrafuncionario,fundocinzacadastrafuncionario,fundorouxocadastracargo;
 	static AnchorPane fundorouxoeditarsetor;
 	static Subcenas subcenas_menu_lateral_esquerdo,subcenas_empresas,subcenas_funcionarios,cenadelempresa,subcenas_cargos,cenacadempresa,cadelempresa,cenacadsetor,cenacadfuncionario,cenacadrisco,cenaeditarsetor;
-	static Subcenas subcenas_setores, subcenas_riscos,subcenas_ipi,subcenas_ppra;
+	static Subcenas subcenas_setores, subcenas_riscos,subcenas_ipi,subcenas_ppra,cenacadastrarcargo;
 	AnchorPane root ;
 	public static fxLabel textomenu, textomenu2,textomenu3,textomenu4,textomenu5,textomenu6,textomenu7,textomenu8,textomenu9,textomenu10;
 	public static fxLabel txtempresa1, txtempresa2,txtempresa3,txtempresa4,txtempresa5,txtempresa6;
@@ -75,12 +77,14 @@ public class Main extends Application {
 	public static fxLabel txtipi1,txtipi2,txtipi3,txtipi4,txtipi5;
 	public static fxLabel txtppra1,txtppra2,txtppra3,txtppra4,txtppra5;
 	public static fxLabel tipo,subtipo,descricao,fatorrisco,fontegeradora,transmissao,cadastrarnovofator,cadnofontegeradora,cadnovatransmissao;
-	public static fxComboBox tipos,subtipos,fatoresrisco,fontesgeradora,viastransmissao,estados;
+	public static fxComboBox tipos,subtipos,fatoresrisco,fontesgeradora,viastransmissao,estados,estadosfu,sugestoessetor;
 	public static Subcenas confirmacao;
 	public static Parent pconfirmacao;
 	public static TableView<Setor> tbeditsetor;
 	public static TableColumn<Setor,String> coluna;
 	public static TableCell celula;
+	
+	public static fxLabel titulocadempresa,titulocadfuncionario,titulocadsetor;
 	static List<String> opc;
 	
 	//labels  e inputtext para a tela de cadastro de empresas
@@ -88,7 +92,8 @@ public class Main extends Application {
 	public static fxLabel cadastrarsetor,cancelarsetor,setordescricao,setoratribuicao,edtsetordescricao,edtsetoratribuicao,cadedtsetor,canceledtsetor;
 	
 	public static fxLabel cpf,nome,ctps,admissao,fonefu,pis,rg,enderecofu,bairrofu,cidadefu,nascimento,estadofu,cep,cadastrarfuncionario,cancelarfuncionario;
-	public static fxTextField tcpf,tnome,tctps,tadmissao,tfonefu,tenderecofu,tpis,trg,tbairrofu,tcidadefu,testadofu,tcep;
+	public static fxTextField tcpf,tnome,tctps,tfonefu,tenderecofu,tpis,trg,tbairrofu,tcidadefu,testadofu,tcep;
+	public static DatePicker tadmissao;
 	public static DatePicker tnascimento;
 	public static fxTextField txtdescricaosetor,txteditdescricaosetor,txteditatribuicaosetor;
 	public static fxTextField tcnpj, trzsocial,tnmfantasia,tendereco,tnum,tcnae1,tcnae2,tsenha,tfone,temail,tcidade,testado,tbairro,tconfirmasenha;
@@ -98,6 +103,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			
+		//	JOptionPane.showMessageDialog(null,ClienteViaCepWS.buscarCep("06867300") );
 			root = new AnchorPane();
 			scene = new Scene(root,400,root.getHeight());
 			scene.getStylesheets().add(getClass().getResource("application.css").toString());
@@ -124,6 +130,7 @@ public class Main extends Application {
 			root.getChildren().add(cenacadsetor);
 			root.getChildren().add(cenaeditarsetor);
 			root.getChildren().add(cenadelempresa);
+			root.getChildren().add(cenacadastrarcargo);
 			
 			primaryStage.show();
 			
@@ -153,6 +160,10 @@ public class Main extends Application {
 		
 		ArrayList<String> botao_bordas_brancas = new ArrayList<String>();
 		 ArrayList<String> bt_cadcancel = new ArrayList<String>();
+		 ArrayList<String> titulo_tela = new ArrayList<String>();
+		 ArrayList<String> linuxStyle = new ArrayList<String>();
+		 titulo_tela.add("fonte_35");
+		 titulo_tela.add("texto_branco");
 		 bt_cadcancel.add("fonte_19");
 		 bt_cadcancel.add("texto_branco");
 		 bt_cadcancel.add("fundo_verde");
@@ -190,6 +201,7 @@ tbeditsetor = new TableView<>();
 		fundorouxosetor = new AnchorPane();
 		fundorouxoeditarsetor = new AnchorPane();
 		fundorouxodelempresa = new AnchorPane();
+		fundorouxocadastracargo = new AnchorPane();
 		
 		fundocinzadelempresa = new AnchorPane();
 		fundocinzaempresas = new AnchorPane();
@@ -198,6 +210,7 @@ tbeditsetor = new TableView<>();
 		fundocinzarisco = new AnchorPane();
 		fundocinzasetor = new AnchorPane();
 		fundocinzaeditarsetor = new AnchorPane();
+		fundocinzacadastracargo = new AnchorPane();
 		
 		
 		
@@ -228,6 +241,8 @@ tbeditsetor = new TableView<>();
 				fundocinzarisco.setPrefSize(scene.getWidth(), scene.getHeight());
 				fundocinzasetor.setPrefSize(scene.getWidth(), scene.getHeight());
 				fundocinzaeditarsetor.setPrefSize(scene.getWidth(), scene.getHeight());
+				fundocinzacadastracargo.setPrefSize(scene.getWidth(), scene.getHeight());
+				
 				fundorouxoempresa.setPrefSize(1035, 705);
 				fundorouxodelempresa.setPrefSize(1035, 705);
 				fundorouxofuncionario.setPrefSize(1035, 705);
@@ -235,28 +250,44 @@ tbeditsetor = new TableView<>();
 				fundorouxorisco.setPrefSize(1035, 705);
 				fundorouxosetor.setPrefSize(1035, 705);
 				fundorouxoeditarsetor.setPrefSize(1035, 705);
+				fundorouxocadastracargo.setPrefSize(1035, 705);
 				
 		
 		//inicio do bloco que criar as Labels para a tela de cadastrop de empresa
 				cancelar = new fxLabel("Cancelar","Cancelar","cempresa");
-				
-				cancelar.setDefaulStyle(bt_cadcancel);
+				titulocadempresa = new fxLabel("Cadastro de empresa");
+				titulocadempresa.setDefaulStyle(titulocadempresa,titulo_tela);
+				cancelar.setDefaulStyle(cancelar,bt_cadcancel);
 				cadastrar = new fxLabel("Cadastrar","Cadastrar","cadempresa");
-				cadastrar.setDefaulStyle(bt_cadcancel);
+				cadastrar.setDefaulStyle(cadastrar,bt_cadcancel);
 				cnpj = new fxLabel("Cnpj:");
+				cnpj.setDefaulStyle(cnpj, "texto_branco_22");
 				rzsocial = new fxLabel("Razão social:");
+				rzsocial.setDefaulStyle(rzsocial, "texto_branco_22");
 				nmfantasia = new fxLabel("Nome fantasía:");
+				nmfantasia.setDefaulStyle(nmfantasia, "texto_branco_22");
 				fone = new fxLabel("Telefone:");
+				fone.setDefaulStyle(fone, "texto_branco_22");
 				email = new fxLabel("E-mail:");
+				email.setDefaulStyle(email, "texto_branco_22");
 				endereco = new fxLabel("Endereço:");
+				endereco.setDefaulStyle(endereco, "texto_branco_22");
 				num = new fxLabel("Número:");
+				num.setDefaulStyle(num, "texto_branco_22");
 				bairro = new fxLabel("Bairro:");
+				bairro.setDefaulStyle(bairro, "texto_branco_22");
 				cidade = new fxLabel("Cidade:");
+				cidade.setDefaulStyle(cidade, "texto_branco_22");
 				estado = new fxLabel("Estado:");
+				estado.setDefaulStyle(estado, "texto_branco_22");
 				cnae1 = new fxLabel("Cnae primário:");
+				cnae1.setDefaulStyle(cnae1, "texto_branco_22");
 				cnae2 = new fxLabel("Cnae secundário:");
+				cnae2.setDefaulStyle(cnae2, "texto_branco_22");
 				senha = new fxLabel("Senha:");
+				senha.setDefaulStyle(senha, "texto_branco_22");
 				confirmasenha = new fxLabel("Confirma:");
+				confirmasenha.setDefaulStyle(confirmasenha, "texto_branco_22");
 				
 		//fim do bloco que cria as labels
 				
@@ -276,7 +307,9 @@ tbeditsetor = new TableView<>();
 				tbairro = new fxTextField();
 				tcidade = new fxTextField();
 				tcnae1 = new fxTextField();
+				tcnae1.setDefaulStyle(tcnae1, "linux_style_text");
 				tcnae2 = new fxTextField();
+				
 				tsenha = new fxTextField();
 				tsenha.setId("senha");
 				tconfirmasenha = new fxTextField();
@@ -286,36 +319,70 @@ tbeditsetor = new TableView<>();
 						);
 				estados = new fxComboBox(listaestados);
 				
-				//cria os objetos para a tela de cadastro de usuario
+				//cria os objetos para a tela de cadastro de funcionario
+				titulocadfuncionario = new fxLabel("Cadastro de funcionario");
+				titulocadfuncionario.setDefaulStyle(titulocadfuncionario,titulo_tela);
 				cancelarfuncionario = new fxLabel("Cancelar","Cancelar","cfuncionario");
 				cadastrarfuncionario = new fxLabel("Cadastrar","Cadastrar","cadfuncionario");
 				nome = new fxLabel("Nome:");
+				nome.setDefaulStyle(nome, "texto_branco_22");
 				cpf = new fxLabel("Cpf:");
+				cpf.setDefaulStyle(cpf, "texto_branco_22");
 				bairrofu = new fxLabel("Bairro");
-				cidadefu = new fxLabel("Cidade");
+				bairrofu.setDefaulStyle(bairrofu, "texto_branco_22");
+				cidadefu = new fxLabel("Cidade:");
+				cidadefu.setDefaulStyle(cidadefu, "texto_branco_22");
 				enderecofu = new fxLabel("Endereço:");
+				enderecofu.setDefaulStyle(enderecofu, "texto_branco_22");
 				ctps = new fxLabel("Ctps:");
+				ctps.setDefaulStyle(ctps, "texto_branco_22");
 				pis = new fxLabel("Pis:");
+				pis.setDefaulStyle(pis, "texto_branco_22");
 				fonefu = new fxLabel("Telefone:");
+				fonefu.setDefaulStyle(fonefu, "texto_branco_22");
 				cep = new fxLabel("Cep:");
+				cep.setDefaulStyle(cep, "texto_branco_22");
+				
 				admissao = new fxLabel("Admissão");
-				rg = new fxLabel("RG");
+				admissao.setDefaulStyle(admissao, "texto_branco_22");
+				rg = new fxLabel("RG:");
+				rg.setDefaulStyle(rg, "texto_branco_22");
 				nascimento = new fxLabel("Nascimento:");
+				nascimento.setDefaulStyle(nascimento, "texto_branco_22");
+				estadofu = new fxLabel("Estado:");
+				estadofu.setDefaulStyle(estadofu, "texto_branco_22");
+				estadosfu = new fxComboBox(listaestados);
 				
 				tnome = new fxTextField();
+				tnome.setDefaulStyle(tnome, "linux_style_text");
 				tcpf = new fxTextField();
+				tcpf.setDefaulStyle(tcpf, "linux_style_text");
 				tbairrofu = new fxTextField();
+				tbairrofu.setDefaulStyle(tbairrofu, "linux_style_text");
 				tenderecofu = new fxTextField();
+				tenderecofu.setDefaulStyle(tenderecofu, "linux_style_text");
+				testadofu = new fxTextField();
+				testadofu.setDefaulStyle(testadofu, "linux_style_text");
+				tcidadefu = new fxTextField();
+				tcidadefu.setDefaulStyle(tcidadefu, "linux_style_text");
 				tctps = new fxTextField();
+				tctps.setDefaulStyle(tctps, "linux_style_text");
 				tpis = new fxTextField();
+				tpis.setDefaulStyle(tpis, "linux_style_text");
 				tfonefu = new fxTextField();
+				tfonefu.setDefaulStyle(tfonefu, "linux_style_text");
 				tcep = new fxTextField();
-				tadmissao = new fxTextField();
+				tcep.setDefaulStyle(tcep, "linux_style_text");
+				tadmissao = new DatePicker();
+			//	tadmissao.setDefaulStyle(tadmissao, "linux_style_text");
 				trg = new fxTextField();
+				trg.setDefaulStyle(trg, "linux_style_text");
 				tnascimento = new DatePicker();
 				
 				
 				//inicio do bloco que cria os labels para a telade cadastro de setor
+				titulocadsetor = new fxLabel("Cadastro de empresa");
+				titulocadsetor.setDefaulStyle(titulocadsetor,titulo_tela);
 				setordescricao = new fxLabel("Descrição:");
 				setoratribuicao = new fxLabel("Atrfibuições:");
 				txtdescricaosetor = new fxTextField();
@@ -323,12 +390,17 @@ tbeditsetor = new TableView<>();
 				;
 				
 				//bloco que cria os componentes na tela de edicao de setor
+				
 				edtsetordescricao = new fxLabel("Descrição:");
 				edtsetoratribuicao = new fxLabel("Atrfibuições:");
 				canceledtsetor = new fxLabel("Cancelar","Cancelar","canceledtsetor");
 				cadedtsetor = new fxLabel("Cadastrar","Cadastrar","cadedtsetor");
 				txteditdescricaosetor = new fxTextField();
 				txteditatribuicaosetor = new fxTextField();
+				List<String> prenchersugestao = new ArrayList<String>();
+				ObservableList<String> listasetores = FXCollections.observableArrayList(prenchersugestao);
+				sugestoessetor = new fxComboBox(listasetores);
+				sugestoessetor.setDefaulStyle(sugestoessetor, "combo_box_padrao_verde");
 				
 				
 		//fim do bloco que cria os textbox
@@ -353,77 +425,86 @@ tbeditsetor = new TableView<>();
 				ObservableList<String> tiposrisco = FXCollections.observableArrayList(opc);
 				
 				tipos = new fxComboBox(tiposrisco);
+				tipos.setDefaulStyle(tipos, "combo_box_padrao_verde");
 				subtipos = new fxComboBox(tiposrisco);
+				subtipos.setDefaulStyle(subtipos, "combo_box_padrao_verde");
 				fatoresrisco = new fxComboBox(tiposrisco);
+				fatoresrisco.setDefaulStyle(fatoresrisco, "combo_box_padrao_verde");
 				fontesgeradora = new fxComboBox(tiposrisco);
+				fontesgeradora.setDefaulStyle(fontesgeradora, "combo_box_padrao_verde");
 				viastransmissao = new fxComboBox(tiposrisco);
+				viastransmissao.setDefaulStyle(viastransmissao, "combo_box_padrao_verde");
 			
 				cancelarsetor = new fxLabel("Cancelar","Cancelar","crsetor");
 				cadastrarsetor = new fxLabel("Cadastrar","Cadastrar","cadsetor");
-				cadastrarsetor.setDefaulStyle(bt_cadcancel);
-				cancelarsetor.setDefaulStyle(bt_cadcancel);
+				cadastrarsetor.setDefaulStyle(cadastrarsetor,bt_cadcancel);
+				cancelarsetor.setDefaulStyle(cancelarsetor,bt_cadcancel);
 				
 		//fim do bloco que cria os textbox
 				
 		//inicio do bloco que posiciona os elementos na tela de cadatro
 				
-				cnpj.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+45);
+				titulocadempresa.setLayoutXY(fundorouxoempresa.getMinWidth()+15,fundorouxoempresa.getMinHeight()+0);
+				titulocadempresa.setPrefSize(350, 50);
+				titulocadempresa.setPadding(new Insets(15, 0, 15, 15));
+				
+				cnpj.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+65);
 				cnpj.setPrefSize(80, 50);
 				cnpj.setPadding(new Insets(15, 0, 15, 15));
 			
-				rzsocial.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+100);
+				rzsocial.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+120);
 				rzsocial.setPrefSize(150, 50);
 				rzsocial.setPadding(new Insets(15, 0, 15, 15));
 				
-				nmfantasia.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+155);
+				nmfantasia.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+175);
 				nmfantasia.setPrefSize(180, 50);
 				nmfantasia.setPadding(new Insets(15, 0, 15, 15));
 				
-				cnae1.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+205);
+				cnae1.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+225);
 				cnae1.setPrefSize(180, 50);
 				cnae1.setPadding(new Insets(15, 0, 15, 15));
 				
-				cnae2.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+205);
+				cnae2.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+225);
 				cnae2.setPrefSize(190, 50);
 				cnae2.setPadding(new Insets(15, 0, 15, 15));
 				
-				endereco.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+255);
+				endereco.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+275);
 				endereco.setPrefSize(190, 50);
 				endereco.setPadding(new Insets(15, 0, 15, 15));
 				
-				num.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+255);
+				num.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+275);
 				num.setPrefSize(190, 50);
 				num.setPadding(new Insets(15, 0, 15, 15));
 				
-				estado.setLayoutXY(fundorouxoempresa.getMinWidth()+610,fundorouxoempresa.getMinHeight()+255);
+				estado.setLayoutXY(fundorouxoempresa.getMinWidth()+610,fundorouxoempresa.getMinHeight()+275);
 				estado.setPrefSize(150, 50);
 				estado.setPadding(new Insets(15, 0, 15, 15));
 				
-				estados.setLayoutXY(fundorouxoempresa.getMinWidth()+698,fundorouxoempresa.getMinHeight()+265);
+				estados.setLayoutXY(fundorouxoempresa.getMinWidth()+698,fundorouxoempresa.getMinHeight()+285);
 				estados.setPrefSize(110, 10);
 				estados.setPadding(new Insets(1, 0, 1, 10));
 				
-				bairro.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+305);
+				bairro.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+325);
 				bairro.setPrefSize(190, 50);
 				bairro.setPadding(new Insets(15, 0, 15, 15));
 				
-				cidade.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+305);
+				cidade.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+325);
 				cidade.setPrefSize(190, 50);
 				cidade.setPadding(new Insets(15, 0, 15, 15));
 				
-				fone.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+355);
+				fone.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+375);
 				fone.setPrefSize(190, 50);
 				fone.setPadding(new Insets(15, 0, 15, 15));
 				
-				email.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+405);
+				email.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+425);
 				email.setPrefSize(190, 50);
 				email.setPadding(new Insets(15, 0, 15, 15));
 				
-				senha.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+455);
+				senha.setLayoutXY(fundorouxoempresa.getMinWidth()+35,fundorouxoempresa.getMinHeight()+475);
 				senha.setPrefSize(190, 50);
 				senha.setPadding(new Insets(15, 0, 15, 15));
 				
-				confirmasenha.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+455);
+				confirmasenha.setLayoutXY(fundorouxoempresa.getMinWidth()+435,fundorouxoempresa.getMinHeight()+475);
 				confirmasenha.setPrefSize(190, 50);
 				confirmasenha.setPadding(new Insets(15, 0, 15, 15));
 				
@@ -440,92 +521,251 @@ tbeditsetor = new TableView<>();
 				//posicionando os textbox(textFielf)
 				
 				tcnpj.setLayoutX(fundorouxoempresa.getMinWidth()+105);
-				tcnpj.setLayoutY(fundorouxoempresa.getMinHeight()+50);
+				tcnpj.setLayoutY(fundorouxoempresa.getMinHeight()+70);
 				tcnpj.setPrefSize(200, 30);
-				
+				tcnpj.setDefaulStyle(tcnpj, "linux_style_text");
 				tcnpj.setPadding(new Insets(5, 0, 5, 5));
 				
 				
 				
 				trzsocial.setLayoutX(fundorouxoempresa.getMinWidth()+180);
-				trzsocial.setLayoutY(fundorouxoempresa.getMinHeight()+115);
+				trzsocial.setLayoutY(fundorouxoempresa.getMinHeight()+135);
+				trzsocial.setDefaulStyle(trzsocial, "linux_style_text");
 				trzsocial.setPrefSize(350, 30);
 				trzsocial.setPadding(new Insets(5, 0, 5, 5));
 				
 				tnmfantasia.setLayoutX(fundorouxoempresa.getMinWidth()+200);
-				tnmfantasia.setLayoutY(fundorouxoempresa.getMinHeight()+170);
+				tnmfantasia.setLayoutY(fundorouxoempresa.getMinHeight()+190);
+				tnmfantasia.setDefaulStyle(tnmfantasia, "linux_style_text");
 				tnmfantasia.setPrefSize(330, 30);
 				tnmfantasia.setPadding(new Insets(5, 0, 5, 5));
 				
 				tcnae1.setLayoutX(fundorouxoempresa.getMinWidth()+200);
-				tcnae1.setLayoutY(fundorouxoempresa.getMinHeight()+220);
+				tcnae1.setLayoutY(fundorouxoempresa.getMinHeight()+240);
+				tcnae1.setDefaulStyle(tcnae1, "linux_style_text");
 				tcnae1.setPrefSize(220, 30);
 				tcnae1.setPadding(new Insets(5, 0, 5, 5));
 				
 				tcnae2.setLayoutX(fundorouxoempresa.getMinWidth()+620);
-				tcnae2.setLayoutY(fundorouxoempresa.getMinHeight()+220);
+				tcnae2.setLayoutY(fundorouxoempresa.getMinHeight()+240);
+				tcnae2.setDefaulStyle(tcnae2, "linux_style_text");
 				tcnae2.setPrefSize(190, 30);
 				tcnae2.setPadding(new Insets(5, 0, 5, 5));
 				
 				tendereco.setLayoutX(fundorouxoempresa.getMinWidth()+150);
-				tendereco.setLayoutY(fundorouxoempresa.getMinHeight()+270);
+				tendereco.setLayoutY(fundorouxoempresa.getMinHeight()+290);
+				tendereco.setDefaulStyle(tendereco, "linux_style_text");
 				tendereco.setPrefSize(270, 30);
 				tendereco.setPadding(new Insets(5, 0, 5, 5));
 				
 				tnum.setLayoutX(fundorouxoempresa.getMinWidth()+540);
-				tnum.setLayoutY(fundorouxoempresa.getMinHeight()+270);
+				tnum.setLayoutY(fundorouxoempresa.getMinHeight()+290);
+				tnum.setDefaulStyle(tnum, "linux_style_text");
 				tnum.setPrefSize(75, 30);
 				tnum.setPadding(new Insets(5, 0, 5, 5));
 				
 				tbairro.setLayoutX(fundorouxoempresa.getMinWidth()+120);
-				tbairro.setLayoutY(fundorouxoempresa.getMinHeight()+320);
+				tbairro.setLayoutY(fundorouxoempresa.getMinHeight()+340);
+				tbairro.setDefaulStyle(tbairro, "linux_style_text");
 				tbairro.setPrefSize(300, 30);
 				tbairro.setPadding(new Insets(5, 0, 5, 5));
 				
 				tcidade.setLayoutX(fundorouxoempresa.getMinWidth()+535);
-				tcidade.setLayoutY(fundorouxoempresa.getMinHeight()+320);
+				tcidade.setLayoutY(fundorouxoempresa.getMinHeight()+340);
+				tcidade.setDefaulStyle(tcidade, "linux_style_text");
 				tcidade.setPrefSize(270, 30);
 				tcidade.setPadding(new Insets(5, 0, 5, 5));
 				
 				tfone.setLayoutX(fundorouxoempresa.getMinWidth()+145);
-				tfone.setLayoutY(fundorouxoempresa.getMinHeight()+370);
+				tfone.setLayoutY(fundorouxoempresa.getMinHeight()+390);
+				tfone.setDefaulStyle(tfone, "linux_style_text");
 				tfone.setPrefSize(275, 30);
 				tfone.setPadding(new Insets(5, 0, 5, 5));
 				
 				temail.setLayoutX(fundorouxoempresa.getMinWidth()+125);
-				temail.setLayoutY(fundorouxoempresa.getMinHeight()+420);
+				temail.setLayoutY(fundorouxoempresa.getMinHeight()+440);
+				temail.setDefaulStyle(temail, "linux_style_text");
 				temail.setPrefSize(295, 30);
 				temail.setPadding(new Insets(5, 0, 5, 5));
 				
 				tsenha.setLayoutX(fundorouxoempresa.getMinWidth()+125);
-				tsenha.setLayoutY(fundorouxoempresa.getMinHeight()+470);
+				tsenha.setLayoutY(fundorouxoempresa.getMinHeight()+490);
+				tsenha.setDefaulStyle(tsenha, "linux_style_text");
 				tsenha.setPrefSize(295, 30);
 				tsenha.setPadding(new Insets(5, 0, 5, 5));
 				
 				tconfirmasenha.setLayoutX(fundorouxoempresa.getMinWidth()+550);
-				tconfirmasenha.setLayoutY(fundorouxoempresa.getMinHeight()+470);
+				tconfirmasenha.setLayoutY(fundorouxoempresa.getMinHeight()+490);
+				tconfirmasenha.setDefaulStyle(tconfirmasenha, "linux_style_text");
 				tconfirmasenha.setPrefSize(255, 30);
 				tconfirmasenha.setPadding(new Insets(5, 0, 5, 5));
+				
+				//trecho que posiciona os itens no cadastro de funcionarios
+				
+				
 				
 		//fim do bloco da tela de cadastro de empresa(que posiciona os elementos na tela
 			
 				//posiciona os componentes na tela de cadastro de setor
+				
+				titulocadsetor.setLayoutXY(fundorouxosetor.getMinWidth()+15,fundorouxosetor.getMinHeight()+0);
+				titulocadsetor.setPrefSize(400, 50);
+				titulocadsetor.setPadding(new Insets(15, 0, 15, 15));
+				
 				setoratribuicao.setLayoutXY(fundorouxosetor.getMinWidth()+765,fundorouxosetor.getMinHeight()+625);
-				setoratribuicao.setPrefSize(120, 50);
+				setoratribuicao.setPrefSize(90, 50);
 				setoratribuicao.setPadding(new Insets(15, 0, 15, 15));
 				setordescricao.setLayoutXY(fundorouxosetor.getMinWidth()+765,fundorouxosetor.getMinHeight()+625);
 				setordescricao.setPrefSize(120, 50);
 				setordescricao.setPadding(new Insets(15, 0, 15, 15));
 				
+				setordescricao.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+80);
+				setordescricao.setPrefSize(150, 50);
+				setordescricao.setPadding(new Insets(15, 0, 15, 15));
+				
+				txtdescricaosetor.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+135);
+				txtdescricaosetor.setPrefSize(500, 30);
+				txtdescricaosetor.setPadding(new Insets(12, 0, 12, 12));
+				textoatribuicaosetor.setPromptText("descriçao das funções a atribuições deste setor");
+				
+				
+				setoratribuicao.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+190);
+				setoratribuicao.setPrefSize(160, 50);
+				setoratribuicao.setPadding(new Insets(15, 0, 15, 15));
+				
+				textoatribuicaosetor.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+245);
+				textoatribuicaosetor.setPrefSize(500, 30);
+				textoatribuicaosetor.setPadding(new Insets(12, 0, 12, 12));
+				
+				sugestoessetor.setLayoutXY(fundorouxosetor.getMinWidth()+600,fundorouxosetor.getMinHeight()+135);
+				sugestoessetor.setPrefSize(350, 30);
+				sugestoessetor.setPadding(new Insets(5, 0, 5, 5));
+				
 				//posiciona os componentes na tela de cadastro de funcionarios
+				
+				titulocadfuncionario.setLayoutXY(fundorouxofuncionario.getMinWidth()+15,fundorouxofuncionario.getMinHeight()+0);
+				titulocadfuncionario.setPrefSize(450, 30);
+				titulocadfuncionario.setPadding(new Insets(15, 0, 15, 20));
+				
+				nome.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+100);
+				nome.setPrefSize(120, 50);
+				nome.setPadding(new Insets(15, 0, 15, 20));
+				
+				tnome.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+100);
+				tnome.setPrefSize(250, 30);
+				tnome.setPadding(new Insets(5, 0, 5, 5));
+				
+				cpf.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+150);
+				cpf.setPrefSize(120, 50);
+				cpf.setPadding(new Insets(15, 0, 15, 20));
+				
+				tcpf.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+150);
+				tcpf.setPrefSize(250, 30);
+				tcpf.setPadding(new Insets(5, 0, 5, 5));
+				
+				rg.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+200);
+				rg.setPrefSize(120, 50);
+				rg.setPadding(new Insets(15, 0, 15, 20));
+				
+				trg.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+200);
+				trg.setPrefSize(250, 30);
+				trg.setPadding(new Insets(5, 0, 5, 5));
+				
+				pis.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+250);
+				pis.setPrefSize(120, 50);
+				pis.setPadding(new Insets(15, 0, 15, 20));
+				
+				tpis.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+250);
+				tpis.setPrefSize(250, 30);
+				tpis.setPadding(new Insets(5, 0, 5, 5));
+				
+				admissao.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+300);
+				admissao.setPrefSize(170, 50);
+				admissao.setPadding(new Insets(15, 0, 15, 20));
+				
+				tadmissao.setLayoutX(fundorouxofuncionario.getMinWidth()+200);
+				tadmissao.setLayoutY(fundorouxofuncionario.getMinHeight()+300);
+				tadmissao.setPrefSize(200, 30);
+				tadmissao.setPadding(new Insets(5, 0, 5, 5));
+				
+				nascimento.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+350);
+				nascimento.setPrefSize(170, 50);
+				nascimento.setPadding(new Insets(15, 0, 15, 20));
+				
+				tnascimento.setLayoutX(fundorouxofuncionario.getMinWidth()+200);
+				tnascimento.setLayoutY(fundorouxofuncionario.getMinHeight()+350);
+				tnascimento.setPrefSize(200, 30);
+				tnascimento.setPadding(new Insets(5, 0, 5, 5));
+				
+				ctps.setLayoutXY(fundorouxofuncionario.getMinWidth()+400,fundorouxofuncionario.getMinHeight()+250);
+				ctps.setPrefSize(120, 50);
+				ctps.setPadding(new Insets(15, 0, 15, 20));
+				
+				tctps.setLayoutXY(fundorouxofuncionario.getMinWidth()+500,fundorouxofuncionario.getMinHeight()+250);
+				tctps.setPrefSize(350, 30);
+				tctps.setPadding(new Insets(5, 0, 5, 5));
+				
+				cidadefu.setLayoutXY(fundorouxofuncionario.getMinWidth()+400,fundorouxofuncionario.getMinHeight()+400);
+				cidadefu.setPrefSize(120, 50);
+				cidadefu.setPadding(new Insets(15, 0, 15, 20));
+				
+				tcidadefu.setLayoutXY(fundorouxofuncionario.getMinWidth()+500,fundorouxofuncionario.getMinHeight()+400);
+				tcidadefu.setPrefSize(250, 30);
+				tcidadefu.setPadding(new Insets(5, 0, 5, 5));
+				
+				estadofu.setLayoutXY(fundorouxofuncionario.getMinWidth()+755,fundorouxofuncionario.getMinHeight()+400);
+				estadofu.setPrefSize(120, 50);
+				estadofu.setPadding(new Insets(15, 0, 15, 20));
+				
+				
+				
+				bairrofu.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+400);
+				bairrofu.setPrefSize(120, 50);
+				bairrofu.setPadding(new Insets(15, 0, 15, 20));
+				
+				tbairrofu.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+400);
+				tbairrofu.setPrefSize(250, 30);
+				tbairrofu.setPadding(new Insets(5, 0, 5, 5));
+				
+				cep.setLayoutXY(fundorouxofuncionario.getMinWidth()+400,fundorouxofuncionario.getMinHeight()+450);
+				cep.setPrefSize(120, 50);
+				cep.setPadding(new Insets(15, 0, 15, 20));
+				
+				tcep.setLayoutXY(fundorouxofuncionario.getMinWidth()+500,fundorouxofuncionario.getMinHeight()+450);
+				tcep.setPrefSize(250, 30);
+				tcep.setPadding(new Insets(5, 0, 5, 5));
+				
+				estadosfu.setLayoutXY(fundorouxofuncionario.getMinWidth()+855,fundorouxofuncionario.getMinHeight()+400);
+				estadosfu.setPrefSize(120, 30);
+				estadosfu.setDefaulStyle(estadosfu, "combo_box_padrao_verde");
+				estadosfu.setPadding(new Insets(5, 0, 5, 5));
+				
+				enderecofu.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+450);
+				enderecofu.setPrefSize(120, 30);
+				enderecofu.setPadding(new Insets(15, 0, 15, 20));
+				
+				tenderecofu.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+450);
+				tenderecofu.setPrefSize(250, 30);
+				tenderecofu.setPadding(new Insets(5, 0, 5, 5));
+				
+				fonefu.setLayoutXY(fundorouxofuncionario.getMinWidth()+35,fundorouxofuncionario.getMinHeight()+500);
+				fonefu.setPrefSize(120, 50);
+				fonefu.setPadding(new Insets(15, 0, 15, 20));
+				
+				tfonefu.setLayoutXY(fundorouxofuncionario.getMinWidth()+155,fundorouxofuncionario.getMinHeight()+500);
+				tfonefu.setPrefSize(250, 30);
+				tfonefu.setPadding(new Insets(5, 0, 5, 5));
+				
+				
+				
 				cancelarfuncionario.setLayoutXY(fundorouxofuncionario.getMinWidth()+765,fundorouxofuncionario.getMinHeight()+625);
 				cancelarfuncionario.setPrefSize(120, 50);
 				cancelarfuncionario.setPadding(new Insets(15, 0, 15, 20));
 				cadastrarfuncionario.setLayoutXY(fundorouxofuncionario.getMinWidth()+895,fundorouxofuncionario.getMinHeight()+625);
 				cadastrarfuncionario.setPrefSize(120, 50);
 				cadastrarfuncionario.setPadding(new Insets(15, 0, 15, 15));
-				cancelarfuncionario.setDefaulStyle(bt_cadcancel);
-				cadastrarfuncionario.setDefaulStyle(bt_cadcancel);
+				cancelarfuncionario.setDefaulStyle(cancelarfuncionario,bt_cadcancel);
+				cadastrarfuncionario.setDefaulStyle(cadastrarfuncionario,bt_cadcancel);
 				
 				
 				//posiciona elementos na tela de cadastro de riscos
@@ -608,23 +848,7 @@ tbeditsetor = new TableView<>();
 				cadedtsetor.setPadding(new Insets(15, 0, 15, 15));
 				canceledtsetor.setPadding(new Insets(15, 0, 15, 20));
 				
-				setordescricao.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+80);
-				setordescricao.setPrefSize(150, 50);
-				setordescricao.setPadding(new Insets(15, 0, 15, 15));
 				
-				txtdescricaosetor.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+135);
-				txtdescricaosetor.setPrefSize(890, 30);
-				txtdescricaosetor.setPadding(new Insets(12, 0, 12, 12));
-				textoatribuicaosetor.setPromptText("descriçao das funções a atribuições deste setor");
-				
-				
-				setoratribuicao.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+190);
-				setoratribuicao.setPrefSize(160, 50);
-				setoratribuicao.setPadding(new Insets(15, 0, 15, 15));
-				
-				textoatribuicaosetor.setLayoutXY(fundorouxosetor.getMinWidth()+35,fundorouxosetor.getMinHeight()+245);
-				textoatribuicaosetor.setPrefSize(890, 30);
-				textoatribuicaosetor.setPadding(new Insets(12, 0, 12, 12));
 				
 				//componentes da tela de edicao de setor
 				
@@ -716,7 +940,7 @@ tbeditsetor = new TableView<>();
 		
 		
 		//textomenu.getStyleClass().addAll("texto_vermelho");
-		textomenu.setDefaulStyle(botao_bordas_brancas);
+		textomenu.setDefaulStyle(textomenu,botao_bordas_brancas);
 		textomenu.setLayoutX(5);
 		textomenu.setLayoutY(5);
 		textomenu.setPrefWidth(285);
@@ -732,7 +956,7 @@ tbeditsetor = new TableView<>();
 		
 		//2 item do menu
 		textomenu2 = new fxLabel("Funcionarios","Funcionarios");
-		textomenu2.setDefaulStyle(botao_bordas_brancas);
+		textomenu2.setDefaulStyle(textomenu2,botao_bordas_brancas);
 		textomenu2.setLayoutX(5);
 		textomenu2.setLayoutY(83);
 		textomenu2.setPrefWidth(285);
@@ -756,7 +980,7 @@ tbeditsetor = new TableView<>();
 		
 		//3 item do menu
 		textomenu3 = new fxLabel("Cargos","Cargos");
-		textomenu3.setDefaulStyle(botao_bordas_brancas);
+		textomenu3.setDefaulStyle(textomenu3,botao_bordas_brancas);
 		textomenu3.setLayoutX(5);
 		textomenu3.setLayoutY(158);
 		textomenu3.setPrefWidth(285);
@@ -766,7 +990,7 @@ tbeditsetor = new TableView<>();
 		
 		//4 item menu
 		textomenu4 = new fxLabel("Setores","Setores");
-		textomenu4.setDefaulStyle(botao_bordas_brancas);
+		textomenu4.setDefaulStyle(textomenu4,botao_bordas_brancas);
 		textomenu4.setLayoutX(5);
 		textomenu4.setLayoutY(233);
 		textomenu4.setPrefWidth(285);
@@ -777,11 +1001,11 @@ tbeditsetor = new TableView<>();
 		txtsetor2 = new fxLabel("Editar Setor","Editar Setor");
 		txtsetor3 = new fxLabel("Vincular a uma Empresa","Vincular a uma Empresa");
 		txtsetor4 = new fxLabel("Pesquisar Setor","Pesquisar Setor");
-		txtsetor5 = new fxLabel("Resumo","Resumo");
+		txtsetor5 = new fxLabel("Cadastrar Ambiente ao setor","cadastrar");
 		
 		//5 item menu
 		textomenu5 = new fxLabel("Riscos","Riscos");
-		textomenu5.setDefaulStyle(botao_bordas_brancas);
+		textomenu5.setDefaulStyle(textomenu5,botao_bordas_brancas);
 		textomenu5.setLayoutX(5);
 		textomenu5.setLayoutY(308);
 		textomenu5.setPrefWidth(285);
@@ -795,7 +1019,7 @@ tbeditsetor = new TableView<>();
 		
 		//6 item menu
 		textomenu6 = new fxLabel("Ipi","Ipi");
-		textomenu6.setDefaulStyle(botao_bordas_brancas);
+		textomenu6.setDefaulStyle(textomenu6,botao_bordas_brancas);
 		textomenu6.setLayoutX(5);
 		textomenu6.setLayoutY(383);
 		textomenu6.setPrefWidth(285);
@@ -809,7 +1033,7 @@ tbeditsetor = new TableView<>();
 		
 		//7 item menu
 		textomenu7 = new fxLabel("Ppra","Ppra");
-		textomenu7.setDefaulStyle("btn_menu_principal");
+		textomenu7.setDefaulStyle(textomenu7,"btn_menu_principal");
 		textomenu7.setLayoutX(5);
 		textomenu7.setLayoutY(459);
 		textomenu7.setPrefWidth(285);
@@ -825,7 +1049,7 @@ tbeditsetor = new TableView<>();
 		
 		//8 item menu
 		textomenu8 = new fxLabel("Ltcat","Ltcat");
-		textomenu8.setDefaulStyle("btn_menu_principal");
+		textomenu8.setDefaulStyle(textomenu8,"btn_menu_principal");
 		textomenu8.setLayoutX(5);
 		textomenu8.setLayoutY(535);
 		textomenu8.setPrefWidth(285);
@@ -833,7 +1057,7 @@ tbeditsetor = new TableView<>();
 		
 		//9 item menu
 		textomenu9 = new fxLabel("Usuarios","Usuarios");
-		textomenu9.setDefaulStyle("btn_menu_principal");
+		textomenu9.setDefaulStyle(textomenu9,"btn_menu_principal");
 		textomenu9.setLayoutX(5);
 		textomenu9.setLayoutY(610);
 		textomenu9.setPrefWidth(285);
@@ -901,7 +1125,7 @@ tbeditsetor = new TableView<>();
 		
 		//9 item menu
 				textomenu10 = new fxLabel("Sair","Sair");
-				textomenu10.setDefaulStyle("btn_menu_principal");
+				textomenu10.setDefaulStyle(textomenu10,"btn_menu_principal");
 				textomenu10.setLayoutX(5);
 				textomenu10.setLayoutY(685);
 				textomenu10.setPrefWidth(285);
@@ -1084,7 +1308,8 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 				passarMouse(tcep);
 				passarMouse(tfonefu);
 				passarMouse(tbairrofu);
-			//	passarMouse(tcidadefu);
+				//passarMouse(tcidadefu);
+				passarMouse(estadosfu);
 				passarMouse(cadastrarfuncionario);
 				passarMouse(cancelarfuncionario);
 				
@@ -1227,123 +1452,24 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 				AddCSS(fundorouxofuncionario,"fundo_degrade_linear_roxo_claro_translucido");
 				AddCSS(fundorouxofuncionario,"bordas_redondas_leves");
 				
+				
+				
 				//fim do bloco acima
+				
+				//tela de cadastro cargo
+				AddCSS(fundocinzacadastracargo,"fundo_degrade_linear_gelo");
+				AddCSS(fundocinzacadastracargo,"bordas_redondas_leves");
+				AddCSS(fundorouxocadastracargo,"fundo_degrade_linear_roxo_claro_translucido");
+				AddCSS(fundorouxocadastracargo,"bordas_redondas_leves");
 				
 				//inicio do bloco que faz o formatacao da tela de cadastro de risco
 				AddCSS(fundocinzarisco,"fundo_degrade_linear_gelo");
 				AddCSS(fundocinzarisco,"bordas_redondas_leves");
 				AddCSS(fundorouxorisco,"fundo_degrade_linear_roxo_claro_translucido");
 				AddCSS(fundorouxorisco,"bordas_redondas_leves");
-				
 		
 		
-		
-		AddCSS(cnpj,"texto_branco");
-		AddCSS(cnpj,"fonte_22");
-		
-		AddCSS(rzsocial,"texto_branco");
-		AddCSS(rzsocial,"fonte_22");
-		
-		AddCSS(nmfantasia,"texto_branco");
-		AddCSS(nmfantasia,"fonte_22");
-		
-		AddCSS(cnae1,"texto_branco");
-		AddCSS(cnae1,"fonte_22");
-		
-		AddCSS(cnae2,"texto_branco");
-		AddCSS(cnae2,"fonte_22");
-		
-		AddCSS(endereco,"texto_branco");
-		AddCSS(endereco,"fonte_22");
-		
-		AddCSS(num,"texto_branco");
-		AddCSS(num,"fonte_22");
-		
-		AddCSS(cidade,"texto_branco");
-		AddCSS(cidade,"fonte_22");
-		
-		AddCSS(estado,"texto_branco");
-		AddCSS(estado,"fonte_22");
-		
-		AddCSS(bairro,"texto_branco");
-		AddCSS(bairro,"fonte_22");
-		
-		AddCSS(fone,"texto_branco");
-		AddCSS(fone,"fonte_22");
-		
-		AddCSS(email,"texto_branco");
-		AddCSS(email,"fonte_22");
-		
-		AddCSS(senha,"texto_branco");
-		AddCSS(senha,"fonte_19");
-		
-		AddCSS(confirmasenha,"texto_branco");
-		AddCSS(confirmasenha,"fonte_19");
-		
-		AddCSS(tcnpj,"linux_style_text");
-		
-		AddCSS(trzsocial,"linux_style_text");
-		
-		AddCSS(tnmfantasia,"linux_style_text");
-		
-		AddCSS(tcnae1,"linux_style_text");
-		
-		AddCSS(tcnae2,"linux_style_text");
-
-		AddCSS(tendereco,"linux_style_text");
-		
-		AddCSS(tnum,"linux_style_text");
-	
-		AddCSS(tcidade,"linux_style_text");
-	
-		
-		//AddCSS(estado,"texto_cinza");
-		//AddCSS(estado,"fonte_22");
-		
-		AddCSS(tbairro,"linux_style_text");
-		
-		AddCSS(tfone,"linux_style_text");
-			
-		AddCSS(temail,"linux_style_text");
-		
-		AddCSS(tsenha,"linux_style_text");
-		
-		AddCSS(tconfirmasenha,"linux_style_text");
-		
-		//formatando tela de cadastro de funcionarios
-		
-		AddCSS(cpf,"texto_branco");
-		AddCSS(cpf,"fonte_22");
-		AddCSS(ctps,"texto_branco");
-		AddCSS(ctps,"fonte_22");
-		AddCSS(fonefu,"texto_branco");
-		AddCSS(fonefu,"fonte_22");
-		AddCSS(bairrofu,"texto_branco");
-		AddCSS(bairrofu,"fonte_22");
-		AddCSS(nome,"texto_branco");
-		AddCSS(nome,"fonte_22");
-		AddCSS(nascimento,"texto_branco");
-		AddCSS(nascimento,"fonte_22");
-		AddCSS(admissao,"texto_branco");
-		AddCSS(admissao,"fonte_22");
-		AddCSS(rg,"texto_branco");
-		AddCSS(rg,"fonte_22");
-		AddCSS(pis,"texto_branco");
-		AddCSS(pis,"fonte_22");
-		AddCSS(enderecofu,"texto_branco");
-		AddCSS(enderecofu,"fonte_22");
-		AddCSS(cep,"texto_branco");
-		AddCSS(cep,"fonte_22");
-		AddCSS(tnome,"linux_style_text");
-		AddCSS(tbairrofu,"linux_style_text");
-		AddCSS(pis,"linux_style_text");
-		AddCSS(tcpf,"linux_style_text");
-		AddCSS(tenderecofu,"linux_style_text");
-		AddCSS(tctps,"linux_style_text");
-		AddCSS(tcep,"linux_style_text");
-		
-		
-		//formatando tela de cadastro de setor
+			//formatando tela de cadastro de setor
 		
 		AddCSS(textoatribuicaosetor,"linux_style_text");
 		AddCSS(txtdescricaosetor,"linux_style_text");
@@ -1415,31 +1541,11 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		AddCSS(transmissao,"texto_branco");
 		AddCSS(transmissao,"fonte_32");
 		
-		AddCSS(tipos,"fundo_verde");
-		AddCSS(tipos,"bordas_redondas_acentuadas_brancas");
-		AddCSS(tipos,"fonte_19");
-		
-		AddCSS(estados,"fundo_verde");
-		AddCSS(estados,"bordas_redondas_acentuadas_brancas");
-		AddCSS(estados,"fonte_19");
-		
-		AddCSS(subtipos,"fundo_verde");
-		AddCSS(subtipos,"bordas_redondas_acentuadas_brancas");
-		AddCSS(subtipos,"fonte_19");
-		
-		AddCSS(fontesgeradora,"fundo_verde");
-		AddCSS(fontesgeradora,"bordas_redondas_acentuadas_brancas");
-		AddCSS(fontesgeradora,"fonte_19");
 		
 		
 		
-		AddCSS(fatoresrisco,"fundo_verde");
-		AddCSS(fatoresrisco,"bordas_redondas_acentuadas_brancas");
-		AddCSS(fatoresrisco,"fonte_19");
 		
-		AddCSS(viastransmissao,"fundo_verde");
-		AddCSS(viastransmissao,"bordas_redondas_acentuadas_brancas");
-		AddCSS(viastransmissao,"fonte_19");
+		
 		
 		
 		estados.setValue(estados.getItems().get(0));
@@ -1579,9 +1685,14 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		fundorouxofuncionario.setLayoutY(20);
 		
 		fundocinzarisco.setLayoutX(300);
-		fundocinzarisco.setLayoutX(0);
+		fundocinzarisco.setLayoutY(0);
 		fundorouxorisco.setLayoutX(15);
 		fundorouxorisco.setLayoutY(20);
+		
+		fundocinzacadastracargo.setLayoutX(300);
+		fundocinzacadastracargo.setLayoutY(0);
+		fundorouxocadastracargo.setLayoutX(15);
+		fundorouxocadastracargo.setLayoutY(20);
 		
 		
 		
@@ -1609,34 +1720,21 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		//subpainelcena3.getChildren().add(txtempresa6);
 		
 		//adiciona os componentes da tela de cadastro de empresa
-		fundorouxoempresa.getChildren().add(cancelar);
-		fundorouxoempresa.getChildren().add(cadastrar);
-		fundorouxoempresa.getChildren().add(cnpj);
-		fundorouxoempresa.getChildren().add(nmfantasia);
-		fundorouxoempresa.getChildren().add(rzsocial);
-		fundorouxoempresa.getChildren().add(cnae1);
-		fundorouxoempresa.getChildren().add(cnae2);
-		fundorouxoempresa.getChildren().add(endereco);
-		fundorouxoempresa.getChildren().add(num);
-		fundorouxoempresa.getChildren().add(bairro);
-		fundorouxoempresa.getChildren().add(cidade);
-		fundorouxoempresa.getChildren().add(estado);
-		fundorouxoempresa.getChildren().add(estados);
-		fundorouxoempresa.getChildren().add(fone);
-		fundorouxoempresa.getChildren().add(email);
-		fundorouxoempresa.getChildren().add(senha);
-		fundorouxoempresa.getChildren().add(confirmasenha);
+		fundorouxoempresa.getChildren().addAll(titulocadempresa,cancelar,cadastrar,cnpj,nmfantasia,rzsocial,cnae1,cnae2,endereco,
+				num,bairro,cidade,estado,estados,fone,email,senha,confirmasenha);
+	
 		
 		
 		fundorouxoempresa.getChildren().addAll(tcnpj,tnmfantasia,trzsocial,tcnae1,tcnae2,tendereco,tnum,
 				tbairro,tcidade,tfone,temail,tsenha,tconfirmasenha);
 		
-		fundorouxofuncionario.getChildren().addAll(nome,cpf,ctps,rg,pis,fonefu,admissao,nascimento,bairrofu,cep,tnome,tcpf,tpis,trg,tfonefu,tbairrofu,tcep,tnascimento,
-				cadastrarfuncionario,cancelarfuncionario);
+		fundorouxofuncionario.getChildren().addAll(nome,cpf,ctps,rg,pis,fonefu,admissao,nascimento,
+				bairrofu,cep,tnome,tcpf,tctps,tpis,trg,tfonefu,tcep,tnascimento,tadmissao,
+				cadastrarfuncionario,cancelarfuncionario,titulocadfuncionario,estadosfu,enderecofu,tbairrofu,tcidadefu,tenderecofu,cidadefu,estadofu);
 	
 		
 		fundorouxosetor.getChildren().addAll(cadastrarsetor,cancelarsetor,setordescricao,setoratribuicao,
-				txtdescricaosetor,textoatribuicaosetor);
+				txtdescricaosetor,textoatribuicaosetor,sugestoessetor,titulocadsetor);
 		
 		fundorouxoeditarsetor.getChildren().addAll(canceledtsetor,cadedtsetor,edtsetordescricao,edtsetoratribuicao,tbeditsetor,txteditdescricaosetor,txteditatribuicaosetor);
 		
@@ -1689,6 +1787,7 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		//fim do bloco acima
 		
 		//as subcenas so serao visiveis apos um botao ser clicado
+		fundocinzacadastracargo.getChildren().add(fundorouxocadastracargo);
 		fundocinzaempresas.getChildren().add(fundorouxoempresa);
 		fundocinzadelempresa.getChildren().add(fundorouxodelempresa);
 		fundocinzafuncionario.getChildren().add(fundorouxofuncionario);
@@ -1741,6 +1840,9 @@ txtppra4.setLayoutXY((subpainelcena8.getWidth()/2)+26,subpainelcena8.getMinHeigh
 		
 		subcenas_cargos = new Subcenas(pmenu_principal_cargos,1380,900);	//menu principal cadastro de cargos
 		subcenas_cargos.setVisible(false);
+		
+		cenacadastrarcargo = new Subcenas(fundocinzacadastracargo,1380,900);	//menu principal cadastro de cargos
+		cenacadastrarcargo.setVisible(false);
 		
 		subcenas_setores = new Subcenas(pmenu_principal_setores,1380,900);
 		subcenas_setores.setVisible(false);

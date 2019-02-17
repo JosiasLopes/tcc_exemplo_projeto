@@ -25,6 +25,11 @@
 	
 	-fx-text-fill: white;
 }
+.texto_branco_22{
+	-fx-text-fill: white;
+	-fx-font-size: 22px;
+}
+
 .fonte_14{
 	-fx-font-size: 14px;
 }
@@ -40,6 +45,9 @@
 }
 .fonte_32{
 	-fx-font-size: 28px;
+}
+.fonte_35{
+	-fx-font-size: 35px;
 }
 .fonte_48{
 	-fx-font-size: 40px;
@@ -111,4 +119,9 @@
 -fx-background-color : rgb(139,213,186);
 -fx-text-fill: white;
 -fx-background-radius: 4;-fx-border-radius: 4;-fx-border-color: white;
+}
+.combo_box_padrao_verde{
+	-fx-background-radius: 7;-fx-border-radius: 7;-fx-border-color: rgba(0,0,0,0);
+	-fx-font-size: 19px;
+	-fx-background-color : rgb(139,213,186);
 }
